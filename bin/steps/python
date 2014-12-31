@@ -1,6 +1,8 @@
 set +e
 PYTHON_VERSION=$(cat runtime.txt)
 
+BUCKET=sqlite-3080704-lang-python
+
 # Install Python.
 if [ -f .heroku/python-version ]; then
   if [ ! $(cat .heroku/python-version) = $PYTHON_VERSION ]; then
@@ -29,7 +31,7 @@ if [ ! "$SKIP_INSTALL" ]; then
     # Prepare destination directory.
     mkdir -p .heroku/python
 
-    curl http://lang-python.s3.amazonaws.com/$STACK/runtimes/$PYTHON_VERSION.tar.gz -s | tar zxv -C .heroku/python &> /dev/null
+    curl http://$BUCKET.s3.amazonaws.com/$STACK/runtimes/$PYTHON_VERSION.tar.gz -s | tar zxv -C .heroku/python &> /dev/null
     if [[ $? != 0 ]] ; then
       puts-warn "Requested runtime ($PYTHON_VERSION) is not available for this stack ($STACK)."
       puts-warn "Aborting.  More info: https://devcenter.heroku.com/articles/python-support"
