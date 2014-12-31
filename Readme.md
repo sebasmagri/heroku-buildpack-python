@@ -6,12 +6,6 @@ instructions](https://docs.djangoproject.com/en/dev/ref/contrib/gis/install/).
 
 --- 
 
-This is a [Heroku buildpack](http://devcenter.heroku.com/articles/buildpacks) for Python apps.
-
-[![Build Status](https://secure.travis-ci.org/dulaccc/heroku-buildpack-geodjango.png?branch=master)](http://travis-ci.org/dulaccc/heroku-buildpack-geodjango)
-
----
-
 ##Configuration
 
 You need to set two Django settings in order for `GEOS` and `GDAL` to work properly.
@@ -26,6 +20,10 @@ GDAL_LIBRARY_PATH = environ.get('GDAL_LIBRARY_PATH')
 ```
 
 ##Usage
+
+The buildpack will detect your app as Python if it has the file `requirements.txt` in the root.
+
+It will use Pip to install your dependencies, vendoring a copy of the Python runtime into your slug.
 
 ```sh
 $ heroku create --stack cedar --buildpack http://github.com/dulaccc/heroku-buildpack-geodjango/
